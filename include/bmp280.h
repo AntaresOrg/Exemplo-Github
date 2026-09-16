@@ -45,6 +45,6 @@ bool bmp280_is_initialized(const bmp280_t *bmp);
 
 bmp280_t *bmp280_init(uint8_t address, const char *name);
 
-bool bmp280_get_relative_altitude(bmp280_t *bmp, float *altitude_m);
+float bmp280_get_relative_altitude(bmp280_t *bmp);
 
-bool bmp280_get_absolute_altitude(bmp280_t *bmp, float *altitude_m);
+float bmp280_get_absolute_altitude(bmp280_t *bmp);
