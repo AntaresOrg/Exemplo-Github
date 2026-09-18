@@ -5,8 +5,6 @@ Esse repositório serve como exemplo de arquitetura dos projetos de eletrônica 
 
 Este README.md está dividido nas seguintes secções:
 
-  
-
 - [Dependências](#dependências)
 
 - [Ambiente de Desenvolvimento](#ambiente-de-desenvolvimento)
@@ -20,8 +18,6 @@ Este README.md está dividido nas seguintes secções:
 ## Dependências
 
 Para começar a contribuir com código nos projetos da Equipe Antares, você primeiro vai precisar:
-
-  
 
 - Conta do Github
 
@@ -37,85 +33,60 @@ Para começar a contribuir com código nos projetos da Equipe Antares, você pri
 
 Caso não tenha alguma das dependências sua primeira tarefa será instalar e configurar as faltantes. Todas estão disponíveis tanto no Windows quanto no Linux.
 
-  
-
 ## Ambiente de Desenvolvimento
-
-  
 
 Agora o precisamos configurar o ambiente para começar a desenvolver o projeto. Atualmente usamos o PlatformIO para compilar e enviar o código feito aos microcontroladores, então usaremos o ambiente dele, seja IDE dele ou como addon, nos projetos.
 
-  
-
 Primeiramente abra o terminal, vá para um local onde deseja, e clone o projeto:
 
-  
-
 ```bash
-
 git  clone  https://github.com/AntaresOrg/Exemplo-Github.git
-
 ```
-
-  
 
 Ao rodar o comando você ira clonar o repositório, ficando com a seguinte estrutura padrão do PlatformIO:
 
 ![File Hierarchy](pictures/file_hierarchy.png)
 
-  
-
 Uma breve descrição de cada componente do projeto:
 
 - Pastas com . no começo:
-
-São pastas de arquivos locais de configuração, o .pio tem configurações locais do PlaatformIO e o .vscode, configurações do VSCode.
+    São pastas de arquivos locais de configuração, o .pio tem configurações locais do PlaatformIO e o .vscode, configurações do VSCode.
 
 - include:
-
-Pasta que tem os headers e arquivos de configuração global do projeto, como o pins.h que tem as definições dos pinos do ESP32. Nesse projeto se atente para o bmp280.h, que contém as assinaturas das funções que devem ser implementadas por você, além de uma breve explicação dos requisitos dessa repositório exemplo.
+    Pasta que tem os headers e arquivos de configuração global do projeto, como o pins.h que tem as definições dos pinos do ESP32. Nesse projeto se atente para o bmp280.h, que contém as assinaturas das funções que devem ser implementadas por você, além de uma breve explicação dos requisitos dessa repositório exemplo.
 
 - lib:
-
-Pasta que contem qualquer bibliotecas externas que vamos usar. Nesse projeto não temos nenhuma.
+    Pasta que contem qualquer bibliotecas externas que vamos usar. Nesse projeto não temos nenhuma.
 
 - src:
-
-Pasta com arquivos fonte em C do projeto. É aqui que deve ser implementado toda a parte funcional do código, nesse projeto você deve trabalhar no bmp280.c, mas aqui também contém o arquivo principal e de entrada do código, o main.c.
+    Pasta com arquivos fonte em C do projeto. É aqui que deve ser implementado toda a parte funcional do código, nesse projeto você deve trabalhar no bmp280.c, mas aqui também contém o arquivo principal e de entrada do código, o main.c.
 
 - test:
-
-Pasta que contém todos os arquivos de teste e validação do código. No nosso projeto também não usaremos ela.
+    Pasta que contém todos os arquivos de teste e validação do código. No nosso projeto também não usaremos ela.
 
 - .gitignore:
-
-Arquivo especial que define quais arquivos e pastas serão excluídos do versionamento do git. Por exemplo a pasta .vscode, contém apenas as configurações locais do projeto no VSCode, sendo inútil para outras pessoas, então para não versionarmos esses tipos de arquivos, os incluímos no .gitignore.
+    Arquivo especial que define quais arquivos e pastas serão excluídos do versionamento do git. Por exemplo a pasta .vscode, contém apenas as configurações locais do projeto no VSCode, sendo inútil para outras pessoas, então para não versionarmos esses tipos de arquivos, os incluímos no .gitignore.
 
 - CMakeLists.txt:
-
-Arquivo que define o PATH da ferramenta CMakeList, para compilar e linkar arquivos C.
+    Arquivo que define o PATH da ferramenta CMakeList, para compilar e linkar arquivos C.
 
 - platformio.ini:
-
-Arquivo de configuração do projeto, aqui definimos qual microcontrolador (esp32doit-devkit-v1), plataforma estamos usando (ESPIDF) e outras configurações do hardware usado.
+    Arquivo de configuração do projeto, aqui definimos qual microcontrolador (esp32doit-devkit-v1), plataforma estamos usando (ESPIDF) e outras configurações do hardware usado.
 
 - sdkconfig.esp32doit-devkit-v1:
+    Arquivo auto gerado pelo PlatformIO para configurar a plataforma que estamos usando. Não alterar.
 
-Arquivo auto gerado pelo PlatformIO para configurar a plataforma que estamos usando. Não alterar.
+Com o repositório clonado, devemos criar uma nova branch para podermos desenvolver o código de forma segura e posteriormente fazermos o merge para a branch main novamente, portanto rode o comando:
 
-  
+```bash
+git checkout -b nome-da-sua-branch
+```
 
-Agora que temos os arquivos podemos começar a codar, mas antes disso, se familiarize com as opções de compilação e flash do PlatformIO, isso pode variar de IDE para IDE, mas colocarei o exemplo do VSCode:
-
-  
+Agora que temos os arquivos e estamos com o ambiente pronto podemos começar a codar, mas antes disso, se familiarize com as opções de compilação e flash do PlatformIO, isso pode variar de IDE para IDE, mas colocarei o exemplo do VSCode:
 
 ![Underbar VSCode](pictures/vscode_underbar.png)
 
-  
-
 Onde os símbolos relevantes são dá casa até a tomada:
-
-  
 
 - Casa: Abre a página home do PlatformIO
 
@@ -135,39 +106,21 @@ Onde os símbolos relevantes são dá casa até a tomada:
 
 - Tomada: Escolhe qual porta o PlatformIO está usando
 
-  
-
 Nós usaremos vários desses botões durante o desenvolvimento e teste do projeto, se familiarize com eles.
-
-  
 
 ## Código
 
-  
-
 Agora é hora de codar o projeto, para isso deveremos implementar algumas funções já definidas em C. Primeiramente abra o arquivo: [bmp280.h](include/bmp280.h). Lá teremos a assinatura das funções que iremos implementar para o projeto além de instruções detalhadas da tarefa.
 
-  
-
-Após a leitura dos requerimentos do projeto, você deve agora implementar em C as funções pedidas no arquivo [bmp280.c](src/bmp280.c). Você pode usar o código do [bmp280 da aviônica do Neblina](https://github.com/AntaresOrg/Avionica-Neblina-I/blob/main/src/bmp280.cpp) como inspiração, porém se atente que este código está bagunçado e forma alguma otimizado ou bem estruturado, além de ter algumas diferenças explicitas no que foi pedido nessa tarefa, você também pode usar como inspiração o código na minha Pull Request de exemplo.
-
-  
+Após a leitura dos requerimentos do projeto, você deve agora implementar em C as funções pedidas no arquivo [bmp280.c](src/bmp280.c). Você pode usar o código do [bmp280 da aviônica do Neblina](https://github.com/AntaresOrg/Avionica-Neblina-I/blob/main/src/bmp280.cpp) como inspiração, porém se atente que este código está bagunçado e forma alguma otimizado ou bem estruturado, além de ter algumas diferenças explicitas no que foi pedido nessa tarefa, você também pode usar como inspiração o código na minha [Pull Request de Exemplo](https://github.com/AntaresOrg/Exemplo-Github/pull/2).
 
 Você também é encorajado a checar o [main.c](src/main.c) para entender como está sendo feito a implementação do Loop Principal do projeto para detectar a altura atual e ascender o led. Além dos arquivos [pins.h](include/pins.h) e [configs.h](include/configs.h) que contém arquivos de pinagem e configuração de constantes do projeto.
 
-  
-
 Quando você estiver pronto para testar sua implementação, você devera primeiramente compilar seu código usando o botão de compilação do PlatformIO (você pode fazer isso via CLI também se preferir), o primeiro indicativo que o código que você fez está certo é ele compilar sem erros. Caso você consiga compilar seu código, podemos ir para a etapa de testar se ele apenas compila ou se realmente roda de maneira desejada, caso contrário leia os erros gerados pelo PlatformIO para encontrar os problemas, e os corrija.
-
-  
 
 ## Hardware
 
-  
-
 Com seu código compilando, devemos agora testar ela na prática, para isso, precisaremos dos seguintes componentes:
-
-  
 
 - 1x ESP32
 
@@ -179,26 +132,64 @@ Com seu código compilando, devemos agora testar ela na prática, para isso, pre
 
 - 1x Breadboard
 
-  
-
 Caso você não tenha alterado os pins do projeto no código, temos de fazer as seguintes ligações:
-
-  
 
 ![Esquemático do Detector de Altitude](pictures/altitude_detector_schematic.png)
 
-  
-
 Com o hardware montado, conecte seu computador ao ESP32 e encontre a porta que ele se conectou. Por experiência, no Linux ela sempre é a dev/tty/USB0, no Windows você pode precisar verificar o Gerenciador de Dispositivos.
-
-  
 
 Agora, flashe o código compilado no ESP32 usando o PlatformIO (via botão de flash ou CLI), caso de erro de primeira tente de novo com o mesmo código, as vezes um congestionamento no porta do ESP causa o primeiro flash a falhar. Com o código compilado, leve o circuito até o treshold acima do que foi escolhido para que a LED se acenda (dica: mude o valor padrão em [configs.h](include/configs.h) para testar mais facilmente ou inverta o if de verificação de altura no [main.c](src/main.c) para checar se a LED esta acendendo). Caso você não tenha o comportamento esperado, seu código provavelmente está errado, você terá de refazer e debugar ele.
 
-  
-
 Com o código pronto, podemos passar para entender como contribuir com seu código via Git/Github.
 
-  
-
 ## Contribuição
+
+Com tudo pronto, podemos adicionar os arquivos necessários para o PR no commit, para isso use o seguinte comando para dar stage em todos os arquivos modificados:
+
+```bash
+git add .
+```
+
+Ou use o seguinte comando para adcionar apenas determinados arquivos:
+
+```bash
+git add src/bmp280.c README.md ...
+```
+
+Lembre-se de colocar apenas os items relevantes ao PR. Você também pode usar GUIs do Git para fazer esse processo, como por exemplo, no VSCode temos essa aba:
+
+![Aba Source Control do VSCode](pictures/source_control_vscode.png)
+
+Com todos os arquivos stageados, crie o commit e sua mensagem:
+
+```bash
+git commit -m "Your commit message"
+```
+
+Lembre-se de colocar uma mensagem descritiva ao seu commit, mas que também seja concisa. Agora podemos enviar esse commit a branch remota do GitHub
+
+```bash
+git push -u origin nome-da-sua-branch
+```
+
+Com isso feito suas alterações estão salvas no servidor do Github, mas apenas na sua branch. Agora finalmente podemos fazer um PR para fazer o merge de suas alterações a branch principal. Para isso vá até o repositório no Github e abra a aba de Pull Requests:
+
+![Aba de Pull Requests no Github](pictures/github_pull_requests.png)
+
+Agora clique no botão "New Pull Request" para abrir um novo PR:
+
+![Aba de Pull Requests no Github](pictures/github_new_pull_request.png)
+
+Na aba compare selecione sua branch e clique para criar um novo PR. Crie um título e uma descrição para ele e o publique. Depois disso é só esperar alguém revisar suas alterações, quando as verificações necessárias forem feitas, seu PR sera mergeado a branch principal.
+
+Para a criação do seu PR, você pode usar de exemplo o seguinte PR da branch Exemplo-Github: [PR Exemplo](https://github.com/AntaresOrg/Exemplo-Github/pull/2)
+
+Se você preferir, você também pode fazer esse processo do PR via CLI, como no exemplo:
+
+```bash
+gh pr create \
+  --base main \
+  --head nome-da-sua-branch \
+  --title "Improve BMP280 measurements" \
+  --body "Correct pressure compensation and add measurement error handling."
+```
