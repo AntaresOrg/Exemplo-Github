@@ -4,10 +4,13 @@
 #include "i2c_utils.h"
 
 #include "driver/gpio.h"
+#include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
 #include <math.h>
+
+#define TAG "MAIN"
 
 /**
  * Main application entry point.
@@ -42,6 +45,9 @@ void app_main(void)
     bmp280_t *bmp1 = bmp280_init(BMP280_ADDR_1, "BMP1");
     bmp280_t *bmp2 = bmp280_init(BMP280_ADDR_2, "BMP2");
 
+    ESP_LOGI(TAG, "BMP1 initialization: %s", bmp280_is_initialized(bmp1) ? "SUCCESS" : "FAILED");
+    ESP_LOGI(TAG, "BMP2 initialization: %s", bmp280_is_initialized(bmp2) ? "SUCCESS" : "FAILED");
+
     if (!bmp1 || !bmp2) {
         // Initialization failed
         gpio_set_level(LED_GPIO, 0);
@@ -54,6 +60,10 @@ void app_main(void)
         // variables will be true if the readings were successful
         float altitude1 = bmp280_get_relative_altitude(bmp1);
         float altitude2 = bmp280_get_relative_altitude(bmp2);
+
+        ESP_LOGI(TAG, "Current relative altitude: BMP1=%.2f m", altitude1);
+        ESP_LOGI(TAG, "Current relative altitude: BMP2=%.2f m", altitude2);
+        ESP_LOGI(TAG, "Average relative altitude: %.2f m", (altitude1 + altitude2) / 2.0f);
 
         if (!isfinite(altitude1) || !isfinite(altitude2)) {
             gpio_set_level(LED_GPIO, 0);

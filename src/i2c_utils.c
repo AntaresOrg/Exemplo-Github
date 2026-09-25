@@ -76,13 +76,11 @@ esp_err_t write_register(
     uint8_t value
 ) {
     uint8_t buffer[2] = {reg, value};
-    return i2c_master_write_read_device(
+    return i2c_master_write_to_device(
         i2c_port,
         address,
         buffer,
         sizeof(buffer),
-        NULL,
-        0,
         pdMS_TO_TICKS(100)
     );
 }
